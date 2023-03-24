@@ -72,6 +72,48 @@ public class SoftwareDesignImplTest {
     }
 
     @Test
+    void updateInvalidCityClient(){
+        List<Clients> clients = new ArrayList<>();
+        clients.add(generateClient());
+        clients.get(0).setCity("lllllllllllllllllllllllllllllllllllllllllllllllllll");
+        when(clientRepository.findByUser(clients.get(0).getUser())).thenReturn(clients);
+
+        when(clientRepository.save(any())).thenReturn(new Clients());
+
+        Clients response = softwareDesign.updateClient(clients.get(0));
+
+        assertNull(response);
+    }
+
+    @Test
+    void updateInvalidStateClient(){
+        List<Clients> clients = new ArrayList<>();
+        clients.add(generateClient());
+        clients.get(0).setState("lllllll");
+        when(clientRepository.findByUser(clients.get(0).getUser())).thenReturn(clients);
+
+        when(clientRepository.save(any())).thenReturn(new Clients());
+
+        Clients response = softwareDesign.updateClient(clients.get(0));
+
+        assertNull(response);
+    }
+
+    @Test
+    void updateInvalidZipClient(){
+        List<Clients> clients = new ArrayList<>();
+        clients.add(generateClient());
+        clients.get(0).setZipcode("l");
+        when(clientRepository.findByUser(clients.get(0).getUser())).thenReturn(clients);
+
+        when(clientRepository.save(any())).thenReturn(new Clients());
+
+        Clients response = softwareDesign.updateClient(clients.get(0));
+
+        assertNull(response);
+    }
+
+    @Test
     void updateNotFoundClient(){
         List<Clients> clients = new ArrayList<>();
         clients.add(generateClient());

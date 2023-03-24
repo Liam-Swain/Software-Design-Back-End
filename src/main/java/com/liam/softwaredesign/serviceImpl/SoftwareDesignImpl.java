@@ -84,6 +84,22 @@ public class SoftwareDesignImpl implements SoftwareDesign {
             return null;
         }
 
+        if(requestBody.getCity().length() > 50 || requestBody.getCity() == null){
+            log.info("City not valid");
+            return null;
+        }
+
+        if(requestBody.getState().length() > 2 || requestBody.getState() == null){
+            log.info("State code not valid");
+            return null;
+        }
+
+        if(requestBody.getZipcode().length() < 5 || requestBody.getZipcode().length() > 9){
+            log.info(" Zipcode not valid");
+            return null;
+        }
+
+        
         // do more validation
 
         if(clients.size() == 0){
