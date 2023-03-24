@@ -13,8 +13,9 @@ public class Clients {
 
     private String name;
 
-    @Id
     private String user;
+
+    private String password;
     private String active;
     private List<String> roles;
     private String address1;

@@ -59,6 +59,18 @@ public class SoftwareControllerTest {
     }
 
     @Test
+    void updateClient(){
+        Clients clients = generateClient();
+
+        when(softwareController.updateClient(clients)).thenReturn(clients);
+
+        Clients response = softwareController.updateClient(clients);
+
+        assertNotNull(response);
+        assertEquals(response, clients);
+    }
+
+    @Test
     void getUserQuoteHistory(){
         FuelQuoteRequest fuelQuoteRequest = new FuelQuoteRequest();
         fuelQuoteRequest.setUsername("liam.v.swain@hotmail.com");
@@ -97,6 +109,22 @@ public class SoftwareControllerTest {
         FuelQuotes ret = softwareController.getUserQuoteHistory(fuelQuoteRequest);
 
         assertEquals(ret, response);
+
+    }
+
+    @Test
+    void login(){
+        String username = "test@hotmail.com";
+        String password = "password";
+
+        Clients clients = generateClient();
+
+        when(softwareDesign.authenticate(username, password)).thenReturn(clients);
+
+        Clients response = softwareController.login(username, password);
+
+        assertNotNull(response);
+        assertEquals(response, clients);
 
     }
 
@@ -152,6 +180,7 @@ public class SoftwareControllerTest {
         Clients client = new Clients();
         client.setRoles(null);
         client.setUser("test@hotmail.com");
+        client.setPassword("password");
         client.setActive("Active");
         client.setState("Tx");
         client.setAddress1("123 Main Street");

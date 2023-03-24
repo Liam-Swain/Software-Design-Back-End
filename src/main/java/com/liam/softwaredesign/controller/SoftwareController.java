@@ -4,10 +4,8 @@ import com.liam.softwaredesign.models.*;
 import com.liam.softwaredesign.service.SoftwareDesign;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin
 @RestController
@@ -22,14 +20,27 @@ public class SoftwareController {
         log.info("Inside Insert Client API");
         return softwareDesign.insertNewClient(client);
     }
-    @PostMapping("/quoteHistory/user")
+
+    @PostMapping("/authenticate")
+    public Clients login(@RequestBody String username, @RequestBody String password){
+        log.info("Entering authenticate API");
+        return softwareDesign.authenticate(username, password);
+    }
+
+    @PutMapping("/updateClient")
+    public Clients updateClient(@RequestBody Clients client){
+        log.info("Inside Update Client API");
+        return softwareDesign.updateClient(client);
+    }
+
+    @GetMapping("/quoteHistory/user")
     public FuelQuotes getUserQuoteHistory(@RequestBody FuelQuoteRequest fuelQuoteRequest){
         log.info("Inside User Fuel Quote History");
 
         return softwareDesign.getUserQuoteHistory(fuelQuoteRequest);
 
     }
-    @PostMapping("/quoteHistory/all")
+    @GetMapping("/quoteHistory/all")
     public FuelQuotes getQuoteHistory(){
         log.info("Inside All Fuel Quote History");
 

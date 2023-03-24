@@ -5,11 +5,14 @@ import com.liam.softwaredesign.models.*;
 import com.liam.softwaredesign.repository.ClientRepository;
 import com.liam.softwaredesign.repository.FuelQuoteRepository;
 import com.liam.softwaredesign.service.SoftwareDesign;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 
+@Slf4j
 @Configuration
 public class SoftwareDesignImpl implements SoftwareDesign {
 
@@ -36,14 +39,48 @@ public class SoftwareDesignImpl implements SoftwareDesign {
         }
 
         if(!alreadyExist){
+
+            // do validation
+
             clientRepository.save(newClient);
-            mailSender.sendEmail(newClient.getUser(), "User Registered", "Thank you For Registering! Once your account is enabled please log back on and finish the registration");
+            //mailSender.sendEmail(newClient.getUser(), "User Registered", "Thank you For Registering! Once your account is enabled please log back on and finish the registration");
         }
         else{
             return null;
         }
 
         return newClient;
+    }
+
+    @Override
+    public Clients authenticate(String username, String password) {
+        if(StringUtils.isEmpty(username) || StringUtils.isEmpty(password)){
+            return null;
+        }
+
+        List<Clients> clients = clientRepository.findByName(username);
+
+        for(int i = 0; i < clients.size(); i++){
+            if(clients.get(i).getPassword().compareTo(password) == 0){
+                return clients.get(i);
+            }
+        }
+
+        return null;
+    }
+
+    @Override
+    public Clients updateClient(Clients requestBody) {
+        List<Clients> clients = clientRepository.findByName(requestBody.getUser());
+
+        if(clients.size() == 0){
+            log.info("No Client Exist With This Name");
+            return null;
+        }
+        // do validation
+        clientRepository.save(requestBody);
+
+        return requestBody;
     }
 
     @Override
@@ -56,6 +93,8 @@ public class SoftwareDesignImpl implements SoftwareDesign {
                 return null;
             }
         }
+
+        // do validation
 
         fuelQuoteRepository.save(fuelQuoteForm);
 

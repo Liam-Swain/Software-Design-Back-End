@@ -42,6 +42,35 @@ public class SoftwareDesignImplTest {
         MockitoAnnotations.openMocks(this);
     }
 
+    @Test
+    void updateClient(){
+        List<Clients> clients = new ArrayList<>();
+        clients.add(generateClient());
+
+        when(clientRepository.findByName(clients.get(0).getUser())).thenReturn(clients);
+
+        when(clientRepository.save(any())).thenReturn(new Clients());
+
+        Clients response = softwareDesign.updateClient(clients.get(0));
+
+        assertNotNull(response);
+        assertEquals(response, clients.get(0));
+
+    }
+
+    @Test
+    void updateNotFoundClient(){
+        List<Clients> clients = new ArrayList<>();
+        clients.add(generateClient());
+        clients.get(0).setUser("notExist@hotmail.com");
+        List<Clients> emptyList = new ArrayList<>();
+        when(clientRepository.findByName(clients.get(0).getUser())).thenReturn(emptyList);
+
+        Clients response = softwareDesign.updateClient(generateClient());
+
+        assertNull(response);
+
+    }
 
     @Test
     void insertExistingClient(){
@@ -131,6 +160,7 @@ public class SoftwareDesignImplTest {
         Clients client = new Clients();
         client.setRoles(null);
         client.setUser("test@hotmail.com");
+        client.setPassword("password");
         client.setActive("Active");
         client.setState("Tx");
         client.setAddress1("123 Main Street");
@@ -165,6 +195,47 @@ public class SoftwareDesignImplTest {
         assertNotNull(response);
         assertEquals(response, fuelQuotes);
 
+    }
+
+    @Test
+    void loginExist(){
+        String username = "test@hotmail.com";
+        String password = "password";
+
+        List<Clients> clients = new ArrayList<>();
+        clients.add(generateClient());
+
+        when(clientRepository.findByName(username)).thenReturn(clients);
+
+        Clients response = softwareDesign.authenticate(username, password);
+
+        assertNotNull(response);
+        assertEquals(response, clients.get(0));
+    }
+
+    @Test
+    void loginDoesNotExist(){
+        String username = "";
+        String password = "";
+        Clients clients = softwareDesign.authenticate(username, password);
+
+        assertNull(clients);
+    }
+
+    @Test
+    void wrongAccount(){
+        String username = "test@hotmail.com";
+        String password = "password2";
+
+        List<Clients> clients = new ArrayList<>();
+        clients.add(generateClient());
+
+        when(clientRepository.findByName(username)).thenReturn(clients);
+
+        Clients response = softwareDesign.authenticate(username, password);
+
+        assertNull(response);
+        assertNotEquals(response, clients.get(0));
     }
 
     @Test
@@ -213,6 +284,7 @@ public class SoftwareDesignImplTest {
         for(int i = 0; i < 5; i++){
             Clients clients = new Clients();
             clients.setName("test");
+            clients.setPassword("password");
             clients.setUser("test@hotmail.com");
             clients.setRoles(null);
             clients.setActive("disabled");

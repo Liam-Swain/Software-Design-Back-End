@@ -8,6 +8,9 @@ public interface SoftwareDesign {
 
     Clients insertNewClient(Clients requestBody);
 
+    Clients authenticate(String username, String password);
+
+    Clients updateClient(Clients requestBody);
 
     FuelQuoteForm insertNewFuelQuote(FuelQuoteForm fuelQuoteForm);
 
