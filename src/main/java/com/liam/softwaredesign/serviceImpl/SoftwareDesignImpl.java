@@ -102,7 +102,7 @@ public class SoftwareDesignImpl implements SoftwareDesign {
             }
         }
 
-        // do validation
+        // do validation now
 
         fuelQuoteRepository.save(fuelQuoteForm);
 
