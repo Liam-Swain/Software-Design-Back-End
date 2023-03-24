@@ -32,7 +32,7 @@ public class SoftwareController {
         return softwareDesign.updateClient(client);
     }
 
-    @GetMapping("/quoteHistory/user")
+    @PostMapping("/quoteHistory/user")
     public FuelQuotes getUserQuoteHistory(@RequestBody FuelQuoteRequest fuelQuoteRequest){
         log.info("Inside User Fuel Quote History");
 

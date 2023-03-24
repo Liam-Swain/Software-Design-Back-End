@@ -236,7 +236,8 @@ public class SoftwareDesignImplTest {
         client.setState("Tx");
         client.setAddress1("123 Main Street");
         client.setName("Test");
-
+        client.setCity("Katy");
+        client.setZipcode("77450");
         return client;
     }
 

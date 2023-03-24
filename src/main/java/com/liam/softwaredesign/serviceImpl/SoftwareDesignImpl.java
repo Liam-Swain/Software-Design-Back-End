@@ -73,7 +73,6 @@ public class SoftwareDesignImpl implements SoftwareDesign {
             log.info("No Client Exist With This Name");
             return null;
         }
-        // do validation
 
         if(requestBody.getName().length() > 50){
             log.info("Full Name Is Not Valid");
@@ -104,8 +103,6 @@ public class SoftwareDesignImpl implements SoftwareDesign {
             return null;
         }
 
-        
-        // do more validation
 
         if(clients.size() == 0){
             return null;
@@ -134,8 +131,6 @@ public class SoftwareDesignImpl implements SoftwareDesign {
                 return null;
             }
         }
-
-        // do validation
 
         fuelQuoteRepository.save(fuelQuoteForm);
 
