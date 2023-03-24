@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class health {
 
     @GetMapping("/healthCheck")
-    public String healthCheck(){
+    public String index(){
 
         return "Microservice Is Up And Running";
     }

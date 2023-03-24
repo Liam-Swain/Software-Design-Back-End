@@ -6,11 +6,18 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public interface SoftwareDesign {
 
+
+    Clients getAllClients();
+    Clients findClient();
     Clients insertNewClient(Clients requestBody);
+    Clients updateClient();
 
-    Clients authenticate(String username, String password);
 
-    Clients updateClient(Clients requestBody);
+    RegisteredClient registerNewClient(RegisteredClient registeredClient);
+
+    RegisteredClient getLoggedInUser();
+
+    RegisteredClient verifyLogin(RegisteredClient registeredClient);
 
     FuelQuoteForm insertNewFuelQuote(FuelQuoteForm fuelQuoteForm);
 

@@ -11,11 +11,10 @@ import java.util.List;
 @Document(collection="Clients")
 public class Clients {
 
+    @Id
+    private String id;
     private String name;
-
     private String user;
-
-    private String password;
     private String active;
     private List<String> roles;
     private String address1;
