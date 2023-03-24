@@ -24,7 +24,5 @@ public class Clients {
     private String address2;
     private String city;
     private String state;
-
-    private String city;
     private String zipcode;
 }
