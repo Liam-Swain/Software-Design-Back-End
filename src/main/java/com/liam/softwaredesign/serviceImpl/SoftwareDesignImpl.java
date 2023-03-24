@@ -99,7 +99,7 @@ public class SoftwareDesignImpl implements SoftwareDesign {
             return null;
         }
 
-        if(requestBody.getZipcode().matches("%[a-zA-Z]%")){
+        if(requestBody.getZipcode().matches(".*[a-zA-Z]+.*")){
             log.info(" Zipcode contains letters");
             return null;
         }

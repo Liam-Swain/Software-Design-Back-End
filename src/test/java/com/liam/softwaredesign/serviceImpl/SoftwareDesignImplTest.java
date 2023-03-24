@@ -101,7 +101,21 @@ public class SoftwareDesignImplTest {
     }
 
     @Test
-    void updateInvalidZipClient(){
+    void updateInvalidZipClientLetters(){
+        List<Clients> clients = new ArrayList<>();
+        clients.add(generateClient());
+        clients.get(0).setCity("llllllllllllllll");
+        clients.get(0).setZipcode("abbbb");
+        when(clientRepository.findByUser(clients.get(0).getUser())).thenReturn(clients);
+
+        when(clientRepository.save(any())).thenReturn(new Clients());
+
+        Clients response = softwareDesign.updateClient(clients.get(0));
+
+        assertNull(response);
+    }
+    @Test
+    void updateInvalidZipClientTooShort(){
         List<Clients> clients = new ArrayList<>();
         clients.add(generateClient());
         clients.get(0).setCity("llllllllllllllll");
