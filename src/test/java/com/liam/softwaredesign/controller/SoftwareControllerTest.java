@@ -121,7 +121,7 @@ public class SoftwareControllerTest {
 
         when(softwareDesign.authenticate(username, password)).thenReturn(clients);
 
-        Clients response = softwareController.login(username, password);
+        Clients response = softwareController.login(clients);
 
         assertNotNull(response);
         assertEquals(response, clients);

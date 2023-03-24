@@ -22,9 +22,9 @@ public class SoftwareController {
     }
 
     @PostMapping("/authenticate")
-    public Clients login(@RequestBody String username, @RequestBody String password){
+    public Clients login(@RequestBody Clients clients){
         log.info("Entering authenticate API");
-        return softwareDesign.authenticate(username, password);
+        return softwareDesign.authenticate(clients.getUser(), clients.getPassword());
     }
 
     @PutMapping("/updateClient")

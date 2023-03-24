@@ -9,6 +9,6 @@ public interface ClientRepository extends MongoRepository<Clients, String> {
 
     Clients save(Clients client);
     List<Clients> findAll();
-    List<Clients> findByName(String name);
+    List<Clients> findByUser(String user);
 
 }

@@ -47,7 +47,7 @@ public class SoftwareDesignImplTest {
         List<Clients> clients = new ArrayList<>();
         clients.add(generateClient());
 
-        when(clientRepository.findByName(clients.get(0).getUser())).thenReturn(clients);
+        when(clientRepository.findByUser(clients.get(0).getUser())).thenReturn(clients);
 
         when(clientRepository.save(any())).thenReturn(new Clients());
 
@@ -55,7 +55,20 @@ public class SoftwareDesignImplTest {
 
         assertNotNull(response);
         assertEquals(response, clients.get(0));
+    }
 
+    @Test
+    void updateInvalidNameClient(){
+        List<Clients> clients = new ArrayList<>();
+        clients.add(generateClient());
+        clients.get(0).setName("lllllllllllllllllllllllllllllllllllllllllllllllllll");
+        when(clientRepository.findByUser(clients.get(0).getUser())).thenReturn(clients);
+
+        when(clientRepository.save(any())).thenReturn(new Clients());
+
+        Clients response = softwareDesign.updateClient(clients.get(0));
+
+        assertNull(response);
     }
 
     @Test
@@ -64,7 +77,7 @@ public class SoftwareDesignImplTest {
         clients.add(generateClient());
         clients.get(0).setUser("notExist@hotmail.com");
         List<Clients> emptyList = new ArrayList<>();
-        when(clientRepository.findByName(clients.get(0).getUser())).thenReturn(emptyList);
+        when(clientRepository.findByUser(clients.get(0).getUser())).thenReturn(emptyList);
 
         Clients response = softwareDesign.updateClient(generateClient());
 
@@ -205,7 +218,7 @@ public class SoftwareDesignImplTest {
         List<Clients> clients = new ArrayList<>();
         clients.add(generateClient());
 
-        when(clientRepository.findByName(username)).thenReturn(clients);
+        when(clientRepository.findByUser(username)).thenReturn(clients);
 
         Clients response = softwareDesign.authenticate(username, password);
 
@@ -230,7 +243,7 @@ public class SoftwareDesignImplTest {
         List<Clients> clients = new ArrayList<>();
         clients.add(generateClient());
 
-        when(clientRepository.findByName(username)).thenReturn(clients);
+        when(clientRepository.findByUser(username)).thenReturn(clients);
 
         Clients response = softwareDesign.authenticate(username, password);
 

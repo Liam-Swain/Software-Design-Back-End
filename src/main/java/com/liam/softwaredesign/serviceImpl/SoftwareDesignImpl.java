@@ -39,11 +39,7 @@ public class SoftwareDesignImpl implements SoftwareDesign {
         }
 
         if(!alreadyExist){
-
-            // do validation
-
             clientRepository.save(newClient);
-            //mailSender.sendEmail(newClient.getUser(), "User Registered", "Thank you For Registering! Once your account is enabled please log back on and finish the registration");
         }
         else{
             return null;
@@ -58,7 +54,7 @@ public class SoftwareDesignImpl implements SoftwareDesign {
             return null;
         }
 
-        List<Clients> clients = clientRepository.findByName(username);
+        List<Clients> clients = clientRepository.findByUser(username);
 
         for(int i = 0; i < clients.size(); i++){
             if(clients.get(i).getPassword().compareTo(password) == 0){
@@ -71,13 +67,25 @@ public class SoftwareDesignImpl implements SoftwareDesign {
 
     @Override
     public Clients updateClient(Clients requestBody) {
-        List<Clients> clients = clientRepository.findByName(requestBody.getUser());
+        List<Clients> clients = clientRepository.findByUser(requestBody.getUser());
 
         if(clients.size() == 0){
             log.info("No Client Exist With This Name");
             return null;
         }
         // do validation
+
+        if(requestBody.getName().length() > 50){
+            log.info("Full Name Is Not Valid");
+            return null;
+        }
+        if(requestBody.getAddress1().length() > 100){
+            log.info("Address 1 Is Not Valid");
+            return null;
+        }
+
+        // do more validation
+
         clientRepository.save(requestBody);
 
         return requestBody;
