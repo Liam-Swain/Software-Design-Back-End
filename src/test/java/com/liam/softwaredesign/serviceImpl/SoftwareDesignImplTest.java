@@ -89,7 +89,8 @@ public class SoftwareDesignImplTest {
     void updateInvalidStateClient(){
         List<Clients> clients = new ArrayList<>();
         clients.add(generateClient());
-        clients.get(0).setState("lllllll");
+        clients.get(0).setCity("llllllllllllllll");
+        clients.get(0).setState("llllllllllllllllllllllllllllllllllllllllllllllll");
         when(clientRepository.findByUser(clients.get(0).getUser())).thenReturn(clients);
 
         when(clientRepository.save(any())).thenReturn(new Clients());
@@ -103,7 +104,8 @@ public class SoftwareDesignImplTest {
     void updateInvalidZipClient(){
         List<Clients> clients = new ArrayList<>();
         clients.add(generateClient());
-        clients.get(0).setZipcode("l");
+        clients.get(0).setCity("llllllllllllllll");
+        clients.get(0).setZipcode("ab");
         when(clientRepository.findByUser(clients.get(0).getUser())).thenReturn(clients);
 
         when(clientRepository.save(any())).thenReturn(new Clients());

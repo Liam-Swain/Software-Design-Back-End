@@ -84,7 +84,7 @@ public class SoftwareDesignImpl implements SoftwareDesign {
             return null;
         }
 
-        if(requestBody.getCity().length() > 50 || requestBody.getCity() == null){
+        if(requestBody.getCity().length() > 50){
             log.info("City not valid");
             return null;
         }
@@ -96,6 +96,11 @@ public class SoftwareDesignImpl implements SoftwareDesign {
 
         if(requestBody.getZipcode().length() < 5 || requestBody.getZipcode().length() > 9){
             log.info(" Zipcode not valid");
+            return null;
+        }
+
+        if(requestBody.getZipcode().matches("%[a-zA-Z]%")){
+            log.info(" Zipcode contains letters");
             return null;
         }
 
