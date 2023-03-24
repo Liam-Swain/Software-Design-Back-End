@@ -86,9 +86,21 @@ public class SoftwareDesignImpl implements SoftwareDesign {
 
         // do more validation
 
-        clientRepository.save(requestBody);
-
-        return requestBody;
+        if(clients.size() == 0){
+            return null;
+        }
+        else{
+            Clients clt = clients.get(0);
+            clt.setName(requestBody.getName());
+            clt.setAddress1(requestBody.getAddress1());
+            clt.setAddress2(requestBody.getAddress2());
+            clt.setState(requestBody.getState());
+            clt.setZipcode(requestBody.getZipcode());
+            clt.setCity(requestBody.getCity());
+            clt.setActive("Enabled");
+            clientRepository.save(clt);
+            return clt;
+        }
     }
 
     @Override

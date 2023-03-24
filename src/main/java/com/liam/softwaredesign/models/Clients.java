@@ -11,6 +11,8 @@ import java.util.List;
 @Document(collection="Clients")
 public class Clients {
 
+    @Id
+    private String id;
     private String name;
 
     private String user;
@@ -21,5 +23,7 @@ public class Clients {
     private String address1;
     private String address2;
     private String state;
+
+    private String city;
     private String zipcode;
 }
