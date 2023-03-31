@@ -12,6 +12,8 @@ public interface SoftwareDesign {
 
     Clients updateClient(Clients requestBody);
 
+    String encodePass(String password);
+
     FuelQuoteForm insertNewFuelQuote(FuelQuoteForm fuelQuoteForm);
 
     FuelQuotes getUserQuoteHistory(FuelQuoteRequest fuelQuoteRequest);

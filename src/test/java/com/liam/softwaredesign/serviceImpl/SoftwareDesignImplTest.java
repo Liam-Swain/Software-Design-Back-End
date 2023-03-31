@@ -90,7 +90,7 @@ public class SoftwareDesignImplTest {
         List<Clients> clients = new ArrayList<>();
         clients.add(generateClient());
         clients.get(0).setCity("llllllllllllllll");
-        clients.get(0).setState("llllllllllllllllllllllllllllllllllllllllllllllll");
+        clients.get(0).setState("");
         when(clientRepository.findByUser(clients.get(0).getUser())).thenReturn(clients);
 
         when(clientRepository.save(any())).thenReturn(new Clients());

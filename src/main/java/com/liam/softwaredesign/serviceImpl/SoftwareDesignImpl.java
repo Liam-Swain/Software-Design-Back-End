@@ -9,6 +9,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.util.StringUtils;
+import java.security.*; 
+import java.security.NoSuchAlgorithmException;
+import java.math.BigInteger;
 
 import java.util.List;
 
@@ -27,10 +30,31 @@ public class SoftwareDesignImpl implements SoftwareDesign {
     FuelQuoteRepository fuelQuoteRepository;
 
     @Override
+    public String encodePass(String password){
+        String givenPass = password;
+        String returnPass = null;
+        try{
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            byte[] bytePass = md.digest(givenPass.getBytes());
+            BigInteger no = new BigInteger(1, bytePass);
+            returnPass = no.toString(16);
+            while (returnPass.length() < 32){  
+                returnPass = "0" + returnPass;  
+            }   
+        }
+        catch (NoSuchAlgorithmException e){  
+            e.printStackTrace();  
+        }  
+        return returnPass;
+    }
+
+    @Override
     public Clients insertNewClient(Clients requestBody) {
         Clients newClient = requestBody;
         List<Clients> clientsList = clientRepository.findAll();
         boolean alreadyExist = false;
+
+        newClient.setPassword(encodePass(newClient.getPassword()));
 
         for(int i = 0; i < clientsList.size(); i++){
             if(clientsList.get(i).getUser().toLowerCase().compareTo(newClient.getUser().toLowerCase()) == 0){
@@ -57,7 +81,7 @@ public class SoftwareDesignImpl implements SoftwareDesign {
         List<Clients> clients = clientRepository.findByUser(username);
 
         for(int i = 0; i < clients.size(); i++){
-            if(clients.get(i).getPassword().compareTo(password) == 0){
+            if(clients.get(i).getPassword().compareTo(encodePass(password)) == 0){
                 return clients.get(i);
             }
         }
@@ -88,7 +112,7 @@ public class SoftwareDesignImpl implements SoftwareDesign {
             return null;
         }
 
-        if(requestBody.getState().length() > 2 || requestBody.getState() == null){
+        if(requestBody.getState().length() < 1 || requestBody.getState() == null){
             log.info("State code not valid");
             return null;
         }
