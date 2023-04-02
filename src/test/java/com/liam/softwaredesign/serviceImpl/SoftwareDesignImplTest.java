@@ -231,7 +231,7 @@ public class SoftwareDesignImplTest {
         Clients client = new Clients();
         client.setRoles(null);
         client.setUser("test@hotmail.com");
-        client.setPassword("password");
+        client.setPassword(softwareDesign.encodePass("password"));
         client.setActive("Active");
         client.setState("Tx");
         client.setAddress1("123 Main Street");

@@ -77,7 +77,6 @@ public class SoftwareDesignImpl implements SoftwareDesign {
         if(StringUtils.isEmpty(username) || StringUtils.isEmpty(password)){
             return null;
         }
-
         List<Clients> clients = clientRepository.findByUser(username);
 
         for(int i = 0; i < clients.size(); i++){
@@ -85,7 +84,7 @@ public class SoftwareDesignImpl implements SoftwareDesign {
                 return clients.get(i);
             }
         }
-
+        log.info("incorrect username or password");
         return null;
     }
 
