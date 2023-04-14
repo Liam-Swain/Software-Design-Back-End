@@ -46,6 +46,13 @@ public class SoftwareController {
         return softwareDesign.getAllQuoteHistory();
 
     }
+
+    @PostMapping("/createQuote")
+    public PricingModule createQuote(@RequestBody FuelQuoteRequest fuelQuoteRequest){
+        log.info("Inside create quote form");
+        return softwareDesign.createQuote(fuelQuoteRequest);
+    }
+
     @PostMapping("/insertQuote")
     public FuelQuoteForm insertQuote(@RequestBody FuelQuoteForm fuelQuoteForm){
         log.info("Inside insert Fuel Quote Form");

@@ -8,4 +8,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @NoArgsConstructor
 public class FuelQuoteRequest {
     private String username;
+    private String gallonsRequested;
+    private String state;
+    private String date;
 }

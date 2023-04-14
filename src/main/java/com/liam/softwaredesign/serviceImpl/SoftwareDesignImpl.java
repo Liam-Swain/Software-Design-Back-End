@@ -182,4 +182,43 @@ public class SoftwareDesignImpl implements SoftwareDesign {
         return fuelQuotes;
     }
 
+    @Override
+    public PricingModule createQuote(FuelQuoteRequest fuelQuoteRequest) {
+        List<FuelQuoteForm> oldQuotes = fuelQuoteRepository.findByUser(fuelQuoteRequest.getUsername());
+        final PricingModule pricingModule = new PricingModule();
+        boolean alreadQuoted = false;
+        double currentPrice = 1.50;
+        double marginFactor = 0;
+        if(oldQuotes.size() > 0){
+            alreadQuoted = true;
+        }
+
+        if(fuelQuoteRequest.getState().compareTo("TX") == 0){
+            marginFactor += 0.02;
+        }
+        else{
+            marginFactor += 0.04;
+        }
+
+        if(alreadQuoted){
+            marginFactor -= 0.01;
+        }
+
+        if(Integer.parseInt(fuelQuoteRequest.getGallonsRequested()) > 1000){
+            marginFactor += 0.02;
+        }
+        else{
+            marginFactor += 0.03;
+        }
+
+        marginFactor += 0.1;
+
+        double suggestedPrice = (currentPrice * marginFactor) + currentPrice;
+        pricingModule.setSuggestedPrice(suggestedPrice + "");
+        double totalAmount = suggestedPrice * Integer.parseInt(fuelQuoteRequest.getGallonsRequested());
+        pricingModule.setTotalPrice(totalAmount + "");
+
+        return pricingModule;
+    }
+
 }

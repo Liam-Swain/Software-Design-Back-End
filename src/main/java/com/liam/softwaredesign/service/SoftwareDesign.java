@@ -19,4 +19,7 @@ public interface SoftwareDesign {
     FuelQuotes getUserQuoteHistory(FuelQuoteRequest fuelQuoteRequest);
 
     FuelQuotes getAllQuoteHistory();
+
+    PricingModule createQuote(FuelQuoteRequest fuelQuoteRequest);
+
 }

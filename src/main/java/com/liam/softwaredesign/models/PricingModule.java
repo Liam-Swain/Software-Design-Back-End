@@ -11,7 +11,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class PricingModule {
 
 
-    private String price;
+    private String suggestedPrice;
+    private String totalPrice;
 
 
 }
