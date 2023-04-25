@@ -3,10 +3,7 @@ package com.liam.softwaredesign.serviceImpl;
 
 import com.liam.softwaredesign.Utils.MailSenderUtils;
 import com.liam.softwaredesign.Utils.MailSenderUtilsTest;
-import com.liam.softwaredesign.models.Clients;
-import com.liam.softwaredesign.models.FuelQuoteForm;
-import com.liam.softwaredesign.models.FuelQuoteRequest;
-import com.liam.softwaredesign.models.FuelQuotes;
+import com.liam.softwaredesign.models.*;
 import com.liam.softwaredesign.repository.ClientRepository;
 import com.liam.softwaredesign.repository.FuelQuoteRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -194,6 +191,44 @@ public class SoftwareDesignImplTest {
         assertNull(response);
     }
 
+    @Test
+    void createQuote(){
+        FuelQuoteRequest fuelQuoteRequest = new FuelQuoteRequest();
+        fuelQuoteRequest.setDate("2023-04-20");
+        fuelQuoteRequest.setUsername("Liam Swain 2");
+        fuelQuoteRequest.setGallonsRequested("1500");
+        fuelQuoteRequest.setState("TX");
+
+        PricingModule pricingModule = new PricingModule();
+        pricingModule.setTotalPrice("2565.0");
+        pricingModule.setSuggestedPrice("1.71");
+
+        when(fuelQuoteRepository.findByUser("Liam Swain 2")).thenReturn(new ArrayList<>());
+        final PricingModule response = softwareDesign.createQuote(fuelQuoteRequest);
+        assertNotNull(response);
+        assertEquals(response, pricingModule);
+    }
+
+    @Test
+    void createQuoteWithHistory(){
+        FuelQuoteRequest fuelQuoteRequest = new FuelQuoteRequest();
+        FuelQuotes fuelQuotes = generateFuelQuotes();
+        fuelQuoteRequest.setDate("2023-04-20");
+        fuelQuoteRequest.setUsername("Liam Swain 2");
+        fuelQuoteRequest.setGallonsRequested("1500");
+        fuelQuoteRequest.setState("TX");
+
+        PricingModule pricingModule = new PricingModule();
+        pricingModule.setTotalPrice("2542.5");
+        pricingModule.setSuggestedPrice("1.695");
+
+
+
+        when(fuelQuoteRepository.findByUser("Liam Swain 2")).thenReturn(fuelQuotes.getFuelQuotesFormList());
+        final PricingModule response = softwareDesign.createQuote(fuelQuoteRequest);
+        assertNotNull(response);
+        assertEquals(response, pricingModule);
+    }
 
     @Test
     void getUserQuoteHistory(){

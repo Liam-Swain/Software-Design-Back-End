@@ -1,9 +1,6 @@
 package com.liam.softwaredesign.controller;
 
-import com.liam.softwaredesign.models.Clients;
-import com.liam.softwaredesign.models.FuelQuoteForm;
-import com.liam.softwaredesign.models.FuelQuoteRequest;
-import com.liam.softwaredesign.models.FuelQuotes;
+import com.liam.softwaredesign.models.*;
 import com.liam.softwaredesign.service.SoftwareDesign;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -71,6 +68,23 @@ public class SoftwareControllerTest {
     }
 
     @Test
+    void createQuote(){
+        PricingModule pricingModule = generatePricingModule();
+        FuelQuoteRequest fuelQuoteRequest = new FuelQuoteRequest();
+        fuelQuoteRequest.setUsername("Test Username");
+        fuelQuoteRequest.setGallonsRequested("1500");
+        fuelQuoteRequest.setState("Tx");
+        fuelQuoteRequest.setDate("2023-04-20");
+        when(softwareController.createQuote(fuelQuoteRequest)).thenReturn(pricingModule);
+
+        final PricingModule response = softwareController.createQuote(fuelQuoteRequest);
+
+        assertNotNull(response);
+        assertEquals(response, pricingModule);
+
+    }
+
+    @Test
     void getUserQuoteHistory(){
         FuelQuoteRequest fuelQuoteRequest = new FuelQuoteRequest();
         fuelQuoteRequest.setUsername("liam.v.swain@hotmail.com");
@@ -135,6 +149,14 @@ public class SoftwareControllerTest {
 
         FuelQuotes ret = softwareController.getQuoteHistory();
         assertEquals(response, ret);
+    }
+
+    private PricingModule generatePricingModule(){
+        PricingModule pricingModule = new PricingModule();
+        pricingModule.setTotalPrice("100");
+        pricingModule.setSuggestedPrice("1.50");
+
+        return pricingModule;
     }
 
     private FuelQuotes generateFuelQuotes(){
