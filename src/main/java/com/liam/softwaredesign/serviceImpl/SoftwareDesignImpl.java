@@ -139,6 +139,9 @@ public class SoftwareDesignImpl implements SoftwareDesign {
             clt.setZipcode(requestBody.getZipcode());
             clt.setCity(requestBody.getCity());
             clt.setActive("Enabled");
+            if(requestBody.getPassword() != null){
+                clt.setPassword(encodePass(requestBody.getPassword()));
+            }
             clientRepository.save(clt);
             return clt;
         }
